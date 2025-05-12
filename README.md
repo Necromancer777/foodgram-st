@@ -32,8 +32,6 @@ docker compose exec backend python manage.py migrate
 
 Загрузить статику:
 
-- Загрузите статику
-
 ```bash
 docker compose exec backend python manage.py collectstatic
 ```
