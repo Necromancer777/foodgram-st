@@ -21,7 +21,7 @@ DB_PORT=5432                          # Порт для подключения �
 Запустить docker compose:
 
 ```bash
-docker compose up -d --build
+docker compose up --build
 ```
 
 Выполнить миграции внутри БД:
