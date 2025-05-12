@@ -9,13 +9,13 @@
 
 
 ```.env
-SECRET_KEY="..."                      # Находится в settings.py
-DB_ENGINE=django.db.backends.postgres # Тип базы данных (postgres)
-DB_NAME=postgres                      # Имя базы
-POSTGRES_USER=postgres                # Логин для подключения к БД
-POSTGRES_PASSWORD=password            # Пароль для подключения к БД
-DB_HOST=db                            # Название контейнера с БД
-DB_PORT=5432                          # Порт для подключения к БД
+POSTGRES_USER=django
+POSTGRES_PASSWORD=mysecretpassword
+POSTGRES_DB=django
+DB_HOST=db
+DB_PORT=5432
+SECRET_KEY=django-insecure-ocn%a0d4&o#9)-9(k#+^9#i3*ck@1t^+%n$4bef#_iwt1nb5c&   # Пример
+ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
 ```
 
 Запустить docker compose:
