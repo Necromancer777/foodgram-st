@@ -1,0 +1,37 @@
+version: '3'
+
+volumes:
+  pg_data:
+  static:
+  media:
+
+services:
+  db:
+    image: postgres:13.10
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+  backend:
+    build: ./backend/
+    env_file: .env
+    volumes:
+      - static:/app/static/
+      - media:/app/media/
+    depends_on:
+      - db
+  frontend:
+    build: ./frontend/
+    volumes:
+      - ./frontend/:/app/result_build/
+    depends_on:
+      - backend
+  nginx:
+    build: ./nginx/
+    ports:
+      - 8000:80
+    volumes:
+      - ./docs/redoc.html:/usr/share/nginx/html/api/docs/redoc.html
+      - ./docs/openapi-schema.yml:/usr/share/nginx/html/api/docs/openapi-schema.yml
+      - ./frontend/build:/usr/share/nginx/html/
+      - static:/var/html/static/
+      - media:/var/html/media/
