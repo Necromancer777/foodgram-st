@@ -1,4 +1,45 @@
-Находясь в папке infra, выполните команду docker-compose up. При выполнении этой команды контейнер frontend, описанный в docker-compose.yml, подготовит файлы, необходимые для работы фронтенд-приложения, а затем прекратит свою работу.
+# Foodgram
 
-По адресу http://localhost изучите фронтенд веб-приложения, а по адресу http://localhost/api/docs/ — спецификацию API.
+## Описание проекта
+«Фудграм» — сайт, на котором пользователи могут публиковать свои рецепты, добавлять чужие рецепты в избранное и подписываться на публикации других авторов.
 
+## Запуск проекта
+
+Создать файл .env в корневой директории проекта, например:
+
+
+```.env
+SECRET_KEY="..."                      # Находится в settings.py
+DB_ENGINE=django.db.backends.postgres # Тип базы данных (postgres)
+DB_NAME=postgres                      # Имя базы
+POSTGRES_USER=postgres                # Логин для подключения к БД
+POSTGRES_PASSWORD=password            # Пароль для подключения к БД
+DB_HOST=db                            # Название контейнера с БД
+DB_PORT=5432                          # Порт для подключения к БД
+```
+
+Запустить docker compose:
+
+```bash
+docker compose up -d --build
+```
+
+Выполнить миграции внутри БД:
+
+```bash
+docker compose exec backend python manage.py migrate
+```
+
+Загрузить статику:
+
+- Загрузите статику
+
+```bash
+docker compose exec backend python manage.py collectstatic
+```
+
+Загрузить в базу ингридиенты:
+
+```bash
+docker compose exec backend python manage.py load_ingredients
+```
