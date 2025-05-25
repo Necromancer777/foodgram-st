@@ -13,29 +13,19 @@ class Command(BaseCommand):
         
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-                created_count = 0
-                for item in data:
-                    Ingredient.objects.get_or_create(
-                        name=item['name'],
-                        measurement_unit=item['measurement_unit']
-                    )
-                    created_count += 1
+                ingredients = [
+                    Ingredient(**item)
+                    for item in json.load(f)
+                ]
+                Ingredient.objects.bulk_create(ingredients,
+                                               ignore_conflicts=True)
                 
                 self.stdout.write(
                     self.style.SUCCESS(
-                        f'Successfully loaded {created_count} ingredients'
+                        f'Successfully loaded {len(ingredients)} ingredients from {file_path}'
                     )
                 )
-        except FileNotFoundError:
-            self.stdout.write(
-                self.style.ERROR('File ingredients.json not found in data directory')
-            )
-        except KeyError as e:
-            self.stdout.write(
-                self.style.ERROR(f'Key error in JSON data: {e}')
-            )
         except Exception as e:
             self.stdout.write(
-                self.style.ERROR(f'Error loading data: {e}')
+                self.style.ERROR(f'Error loading data from {file_path}: {e}')
             )
