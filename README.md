@@ -91,4 +91,3 @@ docker compose exec backend python manage.py load_ingredients
 ### Автор
 Шведуненко Денис
 shvedunenkodenis@gmail.com
->>>>>>> 9d1c781f6f15fcae1d6ee234ad7c892823e66e07
