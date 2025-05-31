@@ -32,6 +32,7 @@ class BooleanRelationFilter(admin.SimpleListFilter):
             return queryset.filter(**{f"{self.relation_name}__isnull": True})
         return queryset
 
+
 class HasRecipesFilter(BooleanRelationFilter):
     title = "наличие рецептов"
     parameter_name = "has_recipes"
