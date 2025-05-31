@@ -10,19 +10,21 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         file_path = os.path.join(settings.BASE_DIR, 'data', 'ingredients.json')
-        
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
-                ingredients = [
-                    Ingredient(**item)
-                    for item in json.load(f)
-                ]
+                data = json.load(f)
+                ingredients = [Ingredient(**item) for item in data]
+
+                before_count = Ingredient.objects.count()
                 Ingredient.objects.bulk_create(ingredients,
                                                ignore_conflicts=True)
-                
+                after_count = Ingredient.objects.count()
+                created_count = after_count - before_count
+
                 self.stdout.write(
                     self.style.SUCCESS(
-                        f'Successfully loaded {len(ingredients)} ingredients from {file_path}'
+                        f'Successfully loaded {created_count} new ingredients'
                     )
                 )
         except Exception as e:
